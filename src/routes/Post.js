@@ -11,9 +11,9 @@ const {
 } = require('../controllers/PostController');
 const { body } = require('express-validator');
 
-router.get('/', getPosts);
-router.get('/comments', getComments);
-router.get('/:id', getOnePost);
+router.get('/', [Authorization], getPosts);
+router.get('/comments', [Authorization], getComments);
+router.get('/:id', [Authorization], getOnePost);
 router.post(
 	'/',
 	[
