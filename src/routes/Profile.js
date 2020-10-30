@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
+const Authorization = require('../middlewares/Authorization');
 const {
 	createProfile,
 	updateProfile,
@@ -10,6 +11,7 @@ const {
 router.post(
 	'/',
 	[
+		Authorization,
 		body('userid').isNumeric(),
 		body('gender').isString().isLength({ min: 3, max: 10 }),
 		body('country').isString().isLength({ min: 3 }),
@@ -20,6 +22,7 @@ router.post(
 router.put(
 	'/:id',
 	[
+		Authorization,
 		body('userid').isNumeric(),
 		body('gender').isString().isLength({ min: 3, max: 10 }),
 		body('country').isString().isLength({ min: 3 }),
@@ -27,5 +30,5 @@ router.put(
 	],
 	updateProfile
 );
-router.delete('/:id', deleteProfile);
+router.delete('/:id', [Authorization], deleteProfile);
 module.exports = router;

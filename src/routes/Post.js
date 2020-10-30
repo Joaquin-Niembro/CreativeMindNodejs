@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Authorization = require('../middlewares/Authorization');
 const {
 	getPosts,
 	getOnePost,
@@ -16,6 +17,7 @@ router.get('/:id', getOnePost);
 router.post(
 	'/',
 	[
+		Authorization,
 		body('userid').isNumeric(),
 		body('title').isString().isLength({ min: 5, max: 60 }),
 		body('content').isString().isLength({ min: 10 }),
@@ -25,11 +27,12 @@ router.post(
 router.put(
 	'/:id',
 	[
+		Authorization,
 		body('userid').isNumeric(),
 		body('title').isString().isLength({ min: 5, max: 60 }),
 		body('content').isString().isLength({ min: 10 }),
 	],
 	updatePost
 );
-router.delete('/:id', deletePost);
+router.delete('/:id', [Authorization], deletePost);
 module.exports = router;

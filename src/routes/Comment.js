@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
+const Authorization = require('../middlewares/Authorization');
 const {
 	createComment,
 	updateComment,
@@ -9,6 +10,7 @@ const {
 router.post(
 	'/',
 	[
+		Authorization,
 		body('postid').isNumeric(),
 		body('userid').isNumeric(),
 		body('content').isString().isLength({ min: 10 }),
@@ -17,7 +19,7 @@ router.post(
 );
 router.put(
 	'/:id',
-	[body('content').isString().isLength({ min: 10 })],
+	[Authorization, body('content').isString().isLength({ min: 10 })],
 	updateComment
 );
 router.delete('/:id', deleteComment);
