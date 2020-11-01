@@ -16,7 +16,6 @@ router.get('/:id', [Authorization], getOneUser);
 router.post(
 	'/',
 	[
-		Authorization,
 		body('name')
 			.isString()
 			.withMessage('Name must be string')
